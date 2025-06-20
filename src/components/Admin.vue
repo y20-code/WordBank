@@ -1,18 +1,18 @@
 <template>
     <!-- 主内容区 -->
+     <div class="admin-container">
+        <SideBar/>
         <div class="main-content">
             <UserHeadr/>
-            
             <UserSearch/>
-            
-
             <UserList/>
-
-            <UserDialog/>
+            <UserDialog/> 
         </div>
+     </div>
 </template>
 
 <script setup>
+    import SideBar from './SideBar.vue';
     import UserHeadr from './UserHeadr.vue';
     import UserList from './UserList.vue';
     import UserSearch from './UserSearch.vue';
@@ -22,6 +22,22 @@
 
 
 <style >
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background-color: #f5f7fa;
+        color: #303133;
+    }
+
+    .admin-container {
+        display: flex;
+        min-height: 100vh;
+    }
 
     /* 主内容区样式 */
     .main-content {

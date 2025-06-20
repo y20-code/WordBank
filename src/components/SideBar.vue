@@ -17,7 +17,7 @@
 <script>
 </script>
 
-<style scoped>
+<style >
     /* 侧边栏样式 */
     .sidebar {
         width: 240px;

@@ -35,7 +35,7 @@
     </div>
 </template>
 
-<style scoped>
+<style>
     .search-bar {
         background-color: #fff;
         padding: 20px;

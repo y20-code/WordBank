@@ -3,14 +3,14 @@
     <div class="header">
         <div class="breadcrumb">用户管理</div>
         <div class="user-info">
-            <img src="https://via.placeholder.com/40" alt="用户头像" class="user-avatar">
+            <!-- <img src="https://via.placeholder.com/40" alt="用户头像" class="user-avatar"> -->
             <span>管理员</span>
         </div>
     </div>
 </template>
 
 
-<style scoped>
+<style>
     .header {
         background-color: #fff;
         padding: 15px 20px;

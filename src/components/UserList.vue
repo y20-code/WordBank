@@ -153,7 +153,7 @@
         color: #909399;
     }
 
-        .role-tag {
+    .role-tag {
         display: inline-block;
         padding: 2px 8px;
         border-radius: 4px;
