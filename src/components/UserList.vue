@@ -5,7 +5,7 @@
                     <h3 class="table-title">用户列表</h3>
                     <div class="table-actions">
                         <button class="btn btn-primary">添加用户</button>
-                        <button class="btn btn-default">导出</button>
+                        <button class="btn btn-default" @click = "aaa">导出</button>
                     </div>
                 </div>
                 <table class="user-table">
@@ -85,6 +85,20 @@
                 </div>
             </div>
 </template>
+
+<script setup>
+
+    import { ref,onMounted } from 'vue';
+    import axiosInstance from '../utils/axios';
+    const users = ref([]);
+    onMounted( () =>{
+        axiosInstance.get('/user')
+            .then(result=>{console.log(result.data)
+            
+        })
+    }
+) 
+</script>
 
 <style scoped>
 

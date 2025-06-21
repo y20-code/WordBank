@@ -23,7 +23,8 @@
 
 <script setup>
     import { ref} from 'vue';
-    import axios from 'axios';
+    import axiosInstance from '../utils/axios';
+    
     import { useRouter } from 'vue-router';
 
     const registerData = ref({
@@ -31,43 +32,66 @@
         password: ''
     });
 
+    const loginError = ref('')
     const router = useRouter();
 
     // 错误消息，使用 ref 存储
     const usernameErrorMessage = ref('');
     const passwordErrorMessage = ref('');
-
     // 验证函数
     const validateUsername = () => {
-    const username = registerData.value.username;
-    if (username.length < 5 || username.length > 16) { // 调整为 5-16 字符
-        usernameErrorMessage.value = '长度不对，请输入 5 到 16 个字符';
-    } else {
-        usernameErrorMessage.value = 'ok';
-    }
-};
+        const username = registerData.value.username;
+        if (username.length < 5 || username.length > 16) { // 调整为 5-16 字符
+            usernameErrorMessage.value = '长度不对，请输入 5 到 16 个字符';
+        } else {
+            usernameErrorMessage.value = 'ok';
+        }
+    };
 
-const validatePassword = () => {
-    const password = registerData.value.password;
-    if (password.length < 5 || password.length > 16) { // 调整为 5-16 字符
-        passwordErrorMessage.value = '长度不对，请输入 5 到 16 个字符';
-    } else {
-        passwordErrorMessage.value = 'ok';
-    }
-};
+    const validatePassword = () => {
+        const password = registerData.value.password;
+        if (password.length < 5 || password.length > 16) { // 调整为 5-16 字符
+            passwordErrorMessage.value = '长度不对，请输入 5 到 16 个字符';
+        } else {
+            passwordErrorMessage.value = 'ok';
+        }
+    };
 
-    const login = () =>{
-        axios({
-            url: 'http://localhost:8080/api/admin/login',
-            method: 'post',
-            data: {
-                username: registerData.value.username,
-                password: registerData.value.password
+    const login = async () =>{
+        if (usernameErrorMessage.value !== 'ok' || passwordErrorMessage.value !== 'ok') {
+            console.log('验证失败');
+            return;
+        }
+
+        try{
+            const response = await axiosInstance.post('/login',{
+            username: registerData.value.username,
+            password: registerData.value.password
+            })
+
+            if(response.data.code === 0){
+                console.log('登录成功');
+                localStorage.setItem('token', response.data.data);
+                axiosInstance.defaults.headers.Authorization = `Bearer ${response.data.data}`;
+                router.replace('/admin');
             }
-        }).then(result=>{
-            console.log(result.data.data);
-            router.push('/admin');
-        })
+        }catch (error) {
+            console.error('登录请求失败:', error);
+            loginError.value = '登录请求失败，请稍后再试';
+        }
+        
+
+        // axios({
+        //     url: 'http://localhost:8080/api/admin/login',
+        //     method: 'post',
+        //     data: {
+        //         username: registerData.value.username,
+        //         password: registerData.value.password
+        //     }
+        // }).then(result=>{
+        //     console.log(result.data.data);
+        //     router.push('/admin');
+        // })
     }
 
 </script>
