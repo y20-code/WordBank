@@ -3,9 +3,11 @@ package com.yls.word_springboot.controller;
 import com.yls.word_springboot.Util.JwtUtil;
 import com.yls.word_springboot.Util.UserContext;
 import com.yls.word_springboot.dto.UserDTO;
+import com.yls.word_springboot.pojo.LoginRequest;
 import com.yls.word_springboot.pojo.Result;
 import com.yls.word_springboot.pojo.User;
 import com.yls.word_springboot.service.UserService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,8 +48,9 @@ public class UserController {
 
     //用户登录
     @PostMapping("/login")
-    public Result login(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password){
-
+    public Result login(@Valid @RequestBody LoginRequest loginRequest){
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
         UserDTO byUserName = userService.findByUserName(username);
         if(byUserName==null){
             return Result.error("没有该用户");

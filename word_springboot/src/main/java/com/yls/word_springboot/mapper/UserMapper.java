@@ -2,10 +2,7 @@ package com.yls.word_springboot.mapper;
 
 import com.yls.word_springboot.dto.UserDTO;
 import com.yls.word_springboot.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,6 +11,10 @@ public interface UserMapper {
 
 
     @Select("SELECT *  FROM users")
+    @Results({
+            @Result(column = "id",property = "userId"),
+            @Result(column = "status",property = "isActive")
+    })
     List<User> getAllUser();
 
     @Insert("insert into users(username,password,email,role,created_at,updated_at) " +
