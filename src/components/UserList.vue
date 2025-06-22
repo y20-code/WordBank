@@ -4,7 +4,7 @@
                 <div class="table-header">
                     <h3 class="table-title">用户列表</h3>
                     <div class="table-actions">
-                        <button class="btn btn-primary">添加用户</button>
+                        <button class="btn btn-primary" @click="addUser">添加用户</button>
                         <button class="btn btn-default" @click = "aaa">导出</button>
                     </div>
                 </div>
@@ -21,53 +21,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>张三</td>
+                        <tr v-for="user in users" :key="user.username">
+                            <td>{{ user.userId }}</td>
+                            <td>{{ user.username }}</td>
                             <td>
-                                <span class="role-tag role-student">学生</span>
+                                <span class="role-tag" :class="` role-${user.role}`">{{ getRoleName(user.role) }}</span>
                             </td>
-                            <td>zhangsan@example.com</td>
-                            <td>2024-03-20</td>
-                            <td><span class="status-tag status-active">正常</span></td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.createdAt }}</td>
+                            <td><span class="status-tag " :class="{'status-active':user.active,'status-inactive':!user.active}">{{ user.active? '正常' : '禁用'}}</span></td>
                             <td>
                                 <div class="action-buttons">
                                     <button class="btn btn-small btn-default">编辑</button>
-                                    <button class="btn btn-small btn-default">禁用</button>
-                                    <button class="btn btn-small btn-default">删除</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>李老师</td>
-                            <td>
-                                <span class="role-tag role-teacher">老师</span>
-                            </td>
-                            <td>lilaoshi@example.com</td>
-                            <td>2024-03-19</td>
-                            <td><span class="status-tag status-active">正常</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-small btn-default">编辑</button>
-                                    <button class="btn btn-small btn-default">禁用</button>
-                                    <button class="btn btn-small btn-default">删除</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>王家长</td>
-                            <td>
-                                <span class="role-tag role-parent">家长</span>
-                            </td>
-                            <td>wangjiazhang@example.com</td>
-                            <td>2024-03-18</td>
-                            <td><span class="status-tag status-inactive">禁用</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="btn btn-small btn-default">编辑</button>
-                                    <button class="btn btn-small btn-default">启用</button>
+                                    <button class="btn btn-small btn-default" @click="DAU(user)">禁用</button>
                                     <button class="btn btn-small btn-default">删除</button>
                                 </div>
                             </td>
@@ -87,17 +53,54 @@
 </template>
 
 <script setup>
-
     import { ref,onMounted } from 'vue';
     import axiosInstance from '../utils/axios';
     const users = ref([]);
+
+    
+
     onMounted( () =>{
         axiosInstance.get('/user')
-            .then(result=>{console.log(result.data)
-            
+            .then(result=>{
+                users.value = result.data.data;
+                console.log(users.value);
+                getRoleName(users.value[0].role);
+                
         })
-    }
-) 
+    })
+    
+
+    // 计算属性或方法将 role 转换为中文
+   const getRoleName = (role) => {
+        const roleMap = {
+            student: '学生',
+            teacher: '老师',
+            parent: '家长'
+        };
+        return roleMap[role] || role; // 如果 role 不匹配，返回原值
+    };
+
+    const DAU = (user) => {
+        console.log('禁用用户', user);
+        user.active = !user.active; // 切换用户状态
+        //localhost:8080/api/admin/user/6/active?active=true
+        axiosInstance.put(`/user/${user.userId}/active?active=${user.active}`)
+            .then(response => {
+                console.log('用户状态更新成功', response.data);
+            })
+            .catch(error => {
+                console.error('更新用户状态失败', error);
+            });
+    };
+
+    const addUser = () => {
+        console.log('添加用户');
+        // 这里可以添加逻辑来处理添加用户的操作
+        
+    };
+
+    
+
 </script>
 
 <style scoped>
