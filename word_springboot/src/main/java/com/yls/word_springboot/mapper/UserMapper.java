@@ -28,6 +28,9 @@ public interface UserMapper {
     @Update("update users set username=#{username},email=#{email},status=#{isActive},updated_at=#{updatedAt} where id =#{userId}")
     void updateUser(User user);
 
-    @Update("update users set password=#{encode} where username=#{username}")
+    @Update("update users set password=#{encode},updated_at=now() where username=#{username}")
     void updatePwd(String encode,String username);
+
+    @Update("update users set status=#{active} where id=#{userId}")
+    void updateActive(Long userId, Boolean active);
 }

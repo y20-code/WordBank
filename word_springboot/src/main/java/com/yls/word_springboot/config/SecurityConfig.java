@@ -40,6 +40,7 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers(HttpMethod.OPTIONS, "/api/admin/**").permitAll() // 允许 OPTIONS 预检
                                 .requestMatchers("/api/admin/login").permitAll()
+                                .requestMatchers("/api/admin/users").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // 添加 JWT 过滤器

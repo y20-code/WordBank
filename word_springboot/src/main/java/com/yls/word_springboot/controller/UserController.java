@@ -87,6 +87,14 @@ public class UserController {
         return Result.success("更新成功·");
     }
 
+    //用户的禁用
+    @PutMapping("user/{userId}/active")
+    public Result activeUser(@PathVariable Long userId, @RequestParam Boolean active){
+
+        userService.updateActive(userId,active);
+        return Result.success("更新成功");
+    }
+
     //修改密码
     @PatchMapping("updatePwd")
     public Result updatePwd(@RequestBody Map<String,String> params){

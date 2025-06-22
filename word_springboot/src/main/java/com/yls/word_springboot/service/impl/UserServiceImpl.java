@@ -3,7 +3,6 @@ package com.yls.word_springboot.service.impl;
 import com.yls.word_springboot.Util.UserContext;
 import com.yls.word_springboot.dto.UserDTO;
 import com.yls.word_springboot.mapper.UserMapper;
-import com.yls.word_springboot.pojo.Result;
 import com.yls.word_springboot.pojo.User;
 import com.yls.word_springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +50,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUser() {
         return  userMapper.getAllUser();
+    }
+
+    @Override
+    public void updateActive(Long userId, Boolean active) {
+        userMapper.updateActive(userId,active);
     }
 
 

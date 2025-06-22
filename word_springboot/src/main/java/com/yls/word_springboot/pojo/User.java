@@ -1,5 +1,6 @@
 package com.yls.word_springboot.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,9 @@ public class User {
     private String role;
     private boolean isActive;
     private String avatar;
+
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private LocalDateTime updatedAt;
 }

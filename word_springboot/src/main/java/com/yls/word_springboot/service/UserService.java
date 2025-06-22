@@ -19,4 +19,6 @@ public interface UserService {
     void updatePwd(String newPwd);
 
     List<User> findAllUser();
+
+    void updateActive(Long userId, Boolean active);
 }
