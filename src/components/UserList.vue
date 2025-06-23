@@ -33,8 +33,8 @@
                             <td>
                                 <div class="action-buttons">
                                     <button class="btn btn-small btn-default">编辑</button>
-                                    <button class="btn btn-small btn-default" @click="DAU(user)">禁用</button>
-                                    <button class="btn btn-small btn-default">删除</button>
+                                    <button class="btn btn-small btn-default" @click="DAU(user)">{{ user.active? '禁用' : '启动' }}</button>
+                                    <button class="btn btn-small btn-default" @click="deleteUser(user)">删除</button>
                                 </div>
                             </td>
                         </tr>
@@ -98,6 +98,15 @@
         // 这里可以添加逻辑来处理添加用户的操作
         
     };
+
+    const deleteUser = (user) =>{
+        console.log('删除用户', user);
+        axiosInstance.delete(`/user/${user.userId}`)
+            .then(response => {
+                console.log('用户删除成功',response.data)
+        })
+    }
+
 
     
 
