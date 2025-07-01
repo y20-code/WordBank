@@ -64,6 +64,7 @@
         }
 
         try{
+            localStorage.removeItem('token'); // 清除之前的 token
             const response = await axiosInstance.post('/login',{
             username: registerData.value.username,
             password: registerData.value.password
