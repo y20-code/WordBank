@@ -6,7 +6,7 @@
             <UserHeadr/>
             <UserSearch/>
             <UserList/>
-            <UserDialog/> 
+            
         </div>
      </div>
 </template>
@@ -16,7 +16,7 @@
     import UserHeadr from './UserHeadr.vue';
     import UserList from './UserList.vue';
     import UserSearch from './UserSearch.vue';
-    import UserDialog from './UserDialog.vue';
+    
 
 </script>
 
